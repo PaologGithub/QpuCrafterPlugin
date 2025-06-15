@@ -14,6 +14,9 @@ public final class QpuCrafterPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Set the instance
+        QpuCrafterPlugin.instance = this;
+
         // Fetch the players
         this.players = QpuCPlayer.fetchPlayers();
     }
