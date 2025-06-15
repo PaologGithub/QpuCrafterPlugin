@@ -1,9 +1,17 @@
 package pao.paolog.plugins.paper.types;
 
+import net.kyori.adventure.text.TextComponent;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.HangingSign;
+import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 
-import pao.paolog.plugins.paper.types.QpuCButton;
+import pao.paolog.plugins.paper.utils.ZoneScanner;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -29,10 +37,29 @@ public class QpuCPlayer {
     }
 
     // Static functions
-    public static List<QpuCPlayer> fetchPlayers() {
+    public static List<QpuCPlayer> fetchPlayers(Location startLocation, Location endLocation) {
         List<QpuCPlayer> players = new ArrayList<QpuCPlayer>();
 
+        List<Block> signs = ZoneScanner.scanZone(startLocation, endLocation, Material.OAK_HANGING_SIGN);
 
+        for (Block signBlock : signs) {
+            HangingSign sign = (HangingSign) signBlock.getState();
+            TextComponent textComponent = (TextComponent) sign.getSide(Side.FRONT).line(0);
+            String username = textComponent.content();
+
+            Player player = Bukkit.getPlayerExact(username);
+
+            if (player != null)  {
+                Block buttonBlock = signBlock.getRelative(BlockFace.UP, 2);
+
+                QpuCButton button = new QpuCButton(buttonBlock);
+
+                players.add(new QpuCPlayer(
+                        player,
+                        button
+                ));
+            }
+        }
 
         return players;
     }

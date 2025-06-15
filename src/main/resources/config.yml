@@ -1,0 +1,17 @@
+scannerStartLocation:
+  ==: org.bukkit.Location
+  world: world
+  x: -4
+  y: 61
+  z: -15
+  pitch: 0.0
+  yaw: 0.0
+
+scannerEndLocation:
+  ==: org.bukkit.Location
+  world: world
+  x: 4
+  y: 61
+  z: -26
+  pitch: 0.0
+  yaw: 0.0
