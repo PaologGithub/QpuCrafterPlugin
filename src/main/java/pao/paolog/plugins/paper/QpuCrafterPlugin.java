@@ -3,6 +3,9 @@ package pao.paolog.plugins.paper;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class QpuCrafterPlugin extends JavaPlugin {
+
+    private static QpuCrafterPlugin instance;
+
     @Override
     public void onEnable() {
 
@@ -11,5 +14,9 @@ public final class QpuCrafterPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    public static QpuCrafterPlugin getInstance() {
+        return QpuCrafterPlugin.instance;
     }
 }
