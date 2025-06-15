@@ -1,0 +1,6 @@
+name: QpuCrafterPlugin
+version: '1.0'
+main: pao.paolog.plugins.paper.QpuCrafterPlugin
+api-version: '1.21'
+authors: [ Paolog ]
+description: Plugin du Question pour un Crafter

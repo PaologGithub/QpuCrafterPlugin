@@ -1,0 +1,10 @@
+# IntelliJ remanents
+run/
+.idea/
+
+# Gradle instance
+.gradle/
+gradle/
+
+# Builds
+build/
