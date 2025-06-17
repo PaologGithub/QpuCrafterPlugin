@@ -29,15 +29,6 @@ public class PrepareCommand implements Command<CommandSourceStack> {
         instance.getScoreBoard().show();
         sender.sendMessage("Showed ScoreBoard");
 
-        // TO REMOVE
-        var scoreBoard = instance.getScoreBoard();
-        scoreBoard.addLine("Non sponsorisé par \uD835\uDD2C");
-        scoreBoard.addLine("Sponsorisé par: Sponsorisateur secret");
-        scoreBoard.addLine("§cScores: §r");
-        for (QpuCPlayer player : instance.getPlayers()) {
-            scoreBoard.addLine(" - §a" + player.getMinecraftPlayer().getName() + "§r: §e" + player.getScore());
-        }
-
         return Command.SINGLE_SUCCESS;
     }
 }
