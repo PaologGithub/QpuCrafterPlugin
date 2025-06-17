@@ -1,8 +1,10 @@
 package pao.paolog.plugins.paper;
 
-import org.bukkit.Bukkit;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Location;
+import pao.paolog.plugins.paper.commands.QpuCCommand;
 import pao.paolog.plugins.paper.types.QpuCPlayer;
+import pao.paolog.plugins.paper.types.QpuCScoreBoard;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +15,11 @@ public final class QpuCrafterPlugin extends JavaPlugin {
     private static QpuCrafterPlugin instance;
 
     private List<QpuCPlayer> players;
+    private QpuCScoreBoard scoreBoard;
+
+    // Configuration
+    private Location scannerStartLocation;
+    private Location scannerEndLocation;
 
     @Override
     public void onEnable() {
@@ -22,24 +29,39 @@ public final class QpuCrafterPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         // Get the config
-        Location scannerStartLocation = getConfig().getLocation("scannerStartLocation");
-        Location scannerEndLocation = getConfig().getLocation("scannerEndLocation");
+        this.scannerStartLocation = getConfig().getLocation("scannerStartLocation");
+        this.scannerEndLocation = getConfig().getLocation("scannerEndLocation");
 
-        // Fetch the players
+        // Set the qpucrafter command
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            QpuCCommand.register(commands.registrar().getDispatcher());
+        });
+
+        // Set the scoreboard
+        this.scoreBoard = new QpuCScoreBoard("qpuc-scoreboard", "\uD835\uDD29");
+    }
+
+    @Override
+    public void onDisable() {
+        // Hide the scoreboard
+        scoreBoard.hide();
+    }
+
+
+    // Public functions to be used on commands
+    public void fetchPlayers() {
         this.players = QpuCPlayer.fetchPlayers(
                 scannerStartLocation,
                 scannerEndLocation
         );
     }
 
-    @Override
-    public void onDisable() {
-    }
-
-
     // Getters
     public List<QpuCPlayer> getPlayers() {
         return players;
+    }
+    public QpuCScoreBoard getScoreBoard() {
+        return scoreBoard;
     }
 
     // Get instance

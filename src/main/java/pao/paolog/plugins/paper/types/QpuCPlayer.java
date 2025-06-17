@@ -11,6 +11,7 @@ import org.bukkit.block.HangingSign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 
+import pao.paolog.plugins.paper.QpuCrafterPlugin;
 import pao.paolog.plugins.paper.utils.ZoneScanner;
 
 import java.util.List;
@@ -44,8 +45,8 @@ public class QpuCPlayer {
 
         for (Block signBlock : signs) {
             HangingSign sign = (HangingSign) signBlock.getState();
-            TextComponent textComponent = (TextComponent) sign.getSide(Side.FRONT).line(0);
-            String username = textComponent.content();
+            TextComponent firstLine = (TextComponent) sign.getSide(Side.FRONT).line(0);
+            String username = firstLine.content();
 
             Player player = Bukkit.getPlayerExact(username);
 
