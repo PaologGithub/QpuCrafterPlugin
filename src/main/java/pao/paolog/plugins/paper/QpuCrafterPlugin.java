@@ -1,12 +1,14 @@
 package pao.paolog.plugins.paper;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.Location;
+
 import pao.paolog.plugins.paper.commands.QpuCCommand;
+import pao.paolog.plugins.paper.listeners.ButtonListener;
 import pao.paolog.plugins.paper.types.QpuCPlayer;
 import pao.paolog.plugins.paper.types.QpuCScoreBoard;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.Location;
 
 import java.util.List;
 
@@ -32,10 +34,11 @@ public final class QpuCrafterPlugin extends JavaPlugin {
         this.scannerStartLocation = getConfig().getLocation("scannerStartLocation");
         this.scannerEndLocation = getConfig().getLocation("scannerEndLocation");
 
-        // Set the qpucrafter command
+        // Register the events and commands
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             QpuCCommand.register(commands.registrar().getDispatcher());
         });
+        getServer().getPluginManager().registerEvents(new ButtonListener(), this);
 
         // Set the scoreboard
         this.scoreBoard = new QpuCScoreBoard("qpuc-scoreboard", "\uD835\uDD29");

@@ -11,7 +11,6 @@ import org.bukkit.block.HangingSign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.entity.Player;
 
-import pao.paolog.plugins.paper.QpuCrafterPlugin;
 import pao.paolog.plugins.paper.utils.ZoneScanner;
 
 import java.util.List;

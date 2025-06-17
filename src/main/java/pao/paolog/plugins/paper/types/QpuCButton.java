@@ -6,6 +6,8 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Switch;
 
+import pao.paolog.plugins.paper.interfaces.ButtonClickHandler;
+
 import java.util.HashMap;
 
 public class QpuCButton {
@@ -15,6 +17,8 @@ public class QpuCButton {
     private final Block buttonBlock;
     private final Switch minecraftButton;
 
+    public ButtonClickHandler clickEventHandler;
+
     public QpuCButton(Block button) {
         if (!Tag.BUTTONS.isTagged(button.getType())) {
             throw new IllegalArgumentException("BlockData must be have the BUTTONS tag.");
@@ -23,7 +27,7 @@ public class QpuCButton {
         this.buttonBlock = button;
         this.minecraftButton = (Switch) button.getBlockData();
 
-        if (QpuCButton.buttons.get(button.getLocation()) != null) {
+        if (!QpuCButton.buttons.containsKey(button.getLocation())) {
             QpuCButton.buttons.put(button.getLocation(), this);
         }
     }
@@ -44,6 +48,11 @@ public class QpuCButton {
 
     public boolean isEnabled() {
         return buttonBlock.getType() != Material.AIR;
+    }
+
+    // ClickEvent
+    public void setClickEventHandler(ButtonClickHandler eventHandler) {
+        this.clickEventHandler = eventHandler;
     }
 
     // Getters
