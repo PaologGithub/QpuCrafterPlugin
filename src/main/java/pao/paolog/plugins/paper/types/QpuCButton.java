@@ -1,14 +1,16 @@
 package pao.paolog.plugins.paper.types;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Switch;
-import pao.paolog.plugins.paper.QpuCrafterPlugin;
+
+import java.util.HashMap;
 
 public class QpuCButton {
+
+    private static final HashMap<Location, QpuCButton> buttons = new HashMap<Location, QpuCButton>();
 
     private final Block buttonBlock;
     private final Switch minecraftButton;
@@ -20,6 +22,10 @@ public class QpuCButton {
 
         this.buttonBlock = button;
         this.minecraftButton = (Switch) button.getBlockData();
+
+        if (QpuCButton.buttons.get(button.getLocation()) != null) {
+            QpuCButton.buttons.put(button.getLocation(), this);
+        }
     }
 
     public void setPowered(boolean value) {
@@ -38,5 +44,10 @@ public class QpuCButton {
 
     public boolean isEnabled() {
         return buttonBlock.getType() != Material.AIR;
+    }
+
+    // Getters
+    public static HashMap<Location, QpuCButton> getAllButtons() {
+        return buttons;
     }
 }
